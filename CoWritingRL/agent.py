@@ -14,7 +14,7 @@ class QLearningAgent:
                                       # 4 - ask advice from adult
 
     self.qValues = defaultdict(float) # table of action-values (values of state x action pair)
-    self.env = CoWriting(gender, adapt_to_gender)      # set the CoWriting environment. Specify the gender of a student and whether it needs to be considered as a pre-advice
+    self.env = OurEnvironment(gender, adapt_to_gender)      # set the CoWriting environment. Specify the gender of a student and whether it needs to be considered as a pre-advice
  
   def act(self, state, epsilon):
      # this is an implementation of epsilon-greedy policy
@@ -35,12 +35,12 @@ class QLearningAgent:
     done = False              # boolean variable indicating whether an episode (10 words) is ended
     # iteration of episodes
     for i in range(iterNum):
-      state = self.env.start()
+      state = self.env.start_episode()
       print("--------------------end of iteration---------------------------")
       gameIter = []           # this is a list where transitions are stored in order to be updated again at the end of an episode
       while True:
         action = self.act(state, self.epsilon)
-        next_state, changed_action, changed, reward, done = self.env.step(action)
+        next_state, changed_action, changed, reward, done = self.env.perform(action)
         if changed:
           self.qValues[(state, action)] = -math.inf
           action = changed_action
@@ -51,7 +51,7 @@ class QLearningAgent:
         if done:
           print("-----------------------end of episode--------------------------")
           break
-      add_reward = self.env.end()
+      add_reward = self.env.end_episode()
       for (state, action, reward, nextState) in gameIter[::-1]:    
         reward = reward + add_reward
         nextQValues = [self.qValues.get((nextState, nextAction), 0) for nextAction in self.actions]
