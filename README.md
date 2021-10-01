@@ -1,4 +1,9 @@
 # Learn-Qazaq
+
+Run: 
+```
+python3 CoWriting/main.py
+```
 # Architecture
 The architecture of our system consists of the environment object, the agent object and the user. The agent is a reinforcement learning algorithm that interacts with the environment. It observes its current state and reward from the environment, and returns an action to perform. For evaluating the quality of performed action we use a popular and efficient RL algorithm called Q-learning. The environment represents an intermediate object which connects agent with user by recording information about user's progress and transmitting it to the agent, as well as receiving an action form the agent and projecting it on interaction with user. 
 
