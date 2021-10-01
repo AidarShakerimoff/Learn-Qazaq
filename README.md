@@ -4,14 +4,14 @@ Run:
 ```
 python3 CoWriting/main.py
 ```
-# Architecture
+## Architecture
 The architecture of our system consists of the environment object, the agent object and the user. The agent is a reinforcement learning algorithm that interacts with the environment. It observes its current state and reward from the environment, and returns an action to perform. For evaluating the quality of performed action we use a popular and efficient RL algorithm called Q-learning. The environment represents an intermediate object which connects agent with user by recording information about user's progress and transmitting it to the agent, as well as receiving an action form the agent and projecting it on interaction with user. 
 
 The environment contains a set of variables that we considered to be useful in the learning process. They include list of letters that student has to learn to write, list of letters that are problematic for student, several sets of words with specific theme, word that student have to write in latin transcription, the time variable measuring the duration of current interaction and overall interaction with user during the episode, gender of user, status of adoption to gender (on/off). 
 
 In order to keep the state-space small only part is shown to the agent as state. Therefore, state information involves only progress indicators such as number of unexplored letters and number of problematic errors, quantised time variable measuring the duration of the recent interaction, as well as other two presumably useful parameters: index of the word set (theme) and gender of the user. These parameters vary in a small range of discrete numbers and form discrete number of states. Yet it can provide comprehensive information needed for decision making since it incorporates knowledge about user's speed of learning that contributes the reward. For example, connecting the time variables with the progress variables might help the agent to make decisions that would speed-up learning if it takes too much time or to slow it down if user goes too fast. Also we suppose that the agent might find connection between the gender of the user and the themes at which the user is more active.
 
-# Interaction
+## Interaction
 The environment has three methods that are callable from outside: "start episode", "perform given action" and "end episode". All three are called from agent side. 
 
 The "start episode" method selects a random word either from a specific (pre-advice is on) or from a random set and presents it to the user. The letters contained in the word are removed from the list of unexplored letters. After receiving the user's answer the environment records errors and time passed from the beginning of the interaction. The resultant state is returned to the agent.
@@ -27,7 +27,7 @@ At the end of an episode we provide an additional reward by calculating the numb
 After the agent performed 10 actions it calls "end episode" function which counts additional reward that considers the number of unsolved problematic letters and overall time spent on interactions during the episode.
 
 
-# Modelling the behaviour
+## Modelling the behaviour
 To generate an optimal behaviour for increasing the reward we implement our agent with Q-learning algorithm. It computes and stores action-values for each state-action pair that it encountered. The action-values represent the estimated optimality of taking a specific action when the specific state is given. They are computed using the formula below.
 
 
