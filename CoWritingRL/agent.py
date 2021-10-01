@@ -1,6 +1,7 @@
 import numpy as np
 import time
 import random
+import math 
 from collections import defaultdict
 from state import State
 from env import CoWriting
