@@ -5,6 +5,7 @@ from collections import defaultdict
 from state import State
 from format import Format
 
+
 class CoWriting:
   #environment class goes here
   def __init__(self, gender, adapt_to_gender = False):
