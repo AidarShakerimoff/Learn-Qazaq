@@ -105,6 +105,7 @@ def cyrToLat(letter):
   else:
     return l
 
+
 import numpy as np
 
 def wordCyrToLat(word):
