@@ -5,6 +5,7 @@ from collections import defaultdict
 from state import State
 from format import Format
 
+
 def stringToList(string):
     list1=[]
     list1[:0]=string
@@ -374,6 +375,8 @@ def wrongLetters (word_entered, word_given):
 
 
   return listOfMistakes
+
+
 
 class CoWriting:
   #environment class goes here
