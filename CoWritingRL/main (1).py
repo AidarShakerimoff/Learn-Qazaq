@@ -4,41 +4,13 @@ import random
 from collections import defaultdict
 import json
 import math
-
-import codecs
-
+import csv
 import os
 import telebot
 
 API = os.environ['API-KEY']
 
 bot = telebot.TeleBot(API)
-
-
-# Function 1. Reads the file, splits quotes and authors, returns a list of tuples that contain either (quote, author) or (quote)
-def crt_tuples():
-    lst_of_tuples = []
-    with codecs.open('dataset.txt', encoding='utf-8-sig') as f:
-        for line in f:
-            lst = line.split('. ')
-            lst = [x.replace("\r\n", "") for x in lst]
-            lst_of_tuples.append(tuple(lst))
-    return lst_of_tuples
-
-def convert_kazakh_to_english(author_name):
-  dictionary = {'Ь': '', 'Ъ': '', 'ъ': '', 'А': 'A', 'а': 'a', 'Ә': 'Ä', 'ә': 'ä', 'Б': 'B', 'б': 'b', 'В': 'V',
-          'в': 'v', 'Г': 'G', 'г': 'g', 'Ғ': 'Ğ', 'ғ': 'ğ', 'Д': 'D', 'д': 'd', 'Е': 'E', 'е': 'e', 'Ё': 'E',
-          'ё': 'e', 'Ж': 'J', 'ж': 'j', 'З': 'Z', 'з': 'z', 'И': 'I', 'и': 'i', 'Й': 'i',
-          'й': 'i', 'K': 'K', 'к': 'k', 'Қ': 'Q', 'қ': 'q', 'Л': 'L', 'л': 'l', 'М': 'M', 'м': 'm', 'Н': 'N',
-          'н': 'n', 'Ң': 'Ñ', 'ң': 'ñ', 'О': 'O', 'о': 'o', 'Ө': 'Ö', 'ө': 'ö', 'П': 'P', 'п': 'p', 'Р': 'R', 'р': 'r', 'С': 'S',
-          'с': 's', 'Т': 'T', 'т': 't', 'У': 'U', 'у': 'u', 'Ұ': 'Ū', 'ұ': 'ū', 'Ү': 'Ü','ү': 'ü', 'Ф': 'F', 'ф': 'f', 'Х': 'H',
-          'х': 'h', 'Һ': 'H', 'һ': 'h', 'Ц': 'S', 'ц': 's', 'Ч': 'Ş', 'ч': 'ş', 'Ш': 'Ş', 'ш': 'ş',
-          'Щ': 'Ş', 'щ': 'ş', 'Ы': 'Y', 'ы': 'y', 'І': 'I', 'і': 'i', "ь": "'", 'Э': 'E', 'э': 'e', 'Ю': 'Iu',
-          'ю': 'iu', 'Я': 'Ia', 'я': 'ia'}
-
-  for kazakh, english in dictionary.items():
-    author_name = author_name.replace(kazakh, english)
-  return author_name
 
 
 
@@ -57,7 +29,7 @@ def listToString(s):
 def cyrToLat(letter):
   l = letter
 # switch letter to a new one
-  if (l == 'а' or l == 'А' or l == 'A' or l == 'a'):
+  if (l == 'а' or l == 'A'):
     return 'a'
   elif (l == 'ә' or l == 'Ә'):
     return 'ä'
@@ -143,7 +115,7 @@ def cyrToLat(letter):
     return 'ä'
   # if any other case is met, return simply same 'letter'
   else:
-    return l ####
+    return l
 
 
 def wordCyrToLat(word):
@@ -228,79 +200,6 @@ def latToCyr(letter):
   else:
     return l
 
-def upperKazakh(letter):
-  l = letter
-# switch letter to a new one
-  if (l == 'a'):
-    return 'A'
-  elif (l == 'ä'):
-    return 'Ä'
-  elif (l == 'b'):
-    return 'B'
-  elif (l == 'v'):
-    return 'V'
-  elif (l == 'g'):
-    return 'G'
-  elif (l == 'ğ'):
-    return 'Ğ'
-  elif (l == 'd'):
-    return 'D'
-  elif (l == 'e'):
-    return 'E'
-  elif (l == 'j'):
-    return 'J'
-  elif (l == 'z'):
-    return 'Z'
-  elif (l == 'i'):
-    return 'I'
-  elif (l == 'i'):
-    return 'I'
-  elif (l == 'k'):
-    return 'K'
-  elif (l == 'q'):
-    return 'Q'
-  elif (l == 'l'):
-    return 'L'
-  elif (l == 'm'):
-    return 'M'
-  elif (l == 'n'):
-    return 'N'
-  elif (l == 'ñ'):
-    return 'Ñ'
-  elif (l == 'o'):
-    return 'O'
-  elif (l == 'ö'):
-    return 'Ö'
-  elif (l == 'p'):
-    return 'P'
-  elif (l == 'r'):
-    return 'R'
-  elif (l == 's'):
-    return 'S'
-  elif (l == 't'):
-    return 'T'
-  elif (l == 'u'):
-    return 'U' 
-  elif (l == 'ū'):
-    return 'Ū'
-  elif (l == 'ü'):
-    return 'Ü'
-  elif (l == 'f'):
-    return 'F'
-  elif (l == 'h'):
-    return 'H'
-  elif (l == 'h'):
-    return 'H'
-  elif (l == 'ş'):
-    return 'Ş'
-  elif (l == 'y'):
-    return 'Y'
-  elif (l == 'ı'):
-    return 'I'
-  # if any other case is met, return simply same 'letter'
-  else:
-    return l
-
 def reversedLetters (word_entered, word_given, index):
   # if entered is less than given
 
@@ -310,7 +209,7 @@ def reversedLetters (word_entered, word_given, index):
       if (index+1 < len(word_entered)):
         if ((word_entered[index+1] == word_given[index]) and (word_entered[index] == word_given[index+1])):
           a = [word_entered[index], word_entered[index+1]]
-          #print("REVERSED")
+          print("REVERSED")
           return a
         else:
           return ''
@@ -324,7 +223,7 @@ def reversedLetters (word_entered, word_given, index):
       if (index+1 < len(word_given)):
         if ((word_entered[index+1] == word_given[index]) and (word_entered[index] == word_given[index+1])):
           a = word_entered[index], word_entered[index+1]
-          #print("REVERSED")
+          print("REVERSED")
           return a
         else:
           return ''
@@ -342,7 +241,7 @@ def missedLetter (word_entered, word_given, index):
       if (i < len(word_entered)):
         if (word_entered[index] == word_given[index+1]):
           a = word_given[index]
-          #print("MISSEDLETTER")
+          print("MISSEDLETTER")
           return a
         else:
           return ''
@@ -360,7 +259,7 @@ def missedLetter (word_entered, word_given, index):
       if (i < len(word_given)):
         if (word_entered[index] == word_given[index+1]):
           a = [word_given[index]]
-          #print("MISSEDLETTER")
+          print("MISSEDLETTER")
           return a
         else:
           return ''
@@ -375,10 +274,10 @@ def extraLetter (word_entered, word_given, index):
       else:
         i = index
       # check first if there is any extra letter after this
-      if (i < len(word_entered)-1):
+      if (i < len(word_entered)):
         if (word_entered[index+1] == word_given[index]):
           a = [word_given[index]]
-          #print("EXTRALETTER")
+          print("EXTRALETTER")
           return a
         else:
           return ''
@@ -396,7 +295,7 @@ def extraLetter (word_entered, word_given, index):
       if (i < len(word_given)):
         if (word_entered[index+1] == word_given[index]):
           a = [word_given[index]]
-          #print("EXTRALETTER")
+          print("EXTRALETTER")
           return a
         else:
           return ''
@@ -439,7 +338,7 @@ def wrongLetters (word_entered, word_given):
               word_entered.pop(i)
               i = i - 1
             else:
-              #print("MISSSPELLED")
+              print("MISSSPELLED")
               word_entered[i] = word_given[i]
               listOfMistakes.append(word_given[i])
 
@@ -469,18 +368,18 @@ def wrongLetters (word_entered, word_given):
               word_entered.pop(i)
               i = i - 1;
             else:
-              #print("MISSSPELLED")
+              print("MISSSPELLED")
               word_entered[i] = word_given[i]
               listOfMistakes.append(word_given[i])
     i = i + 1;
   if (len(word_entered) < len(word_given)):
     for i in range(len(word_entered), len(word_given)):
-      #print("Extra")
+      print("Extra")
       listOfMistakes.append(word_given[i])
 
   else:
     for i in range(len(word_given), len(word_entered)):
-      #print("Extra")
+      print("Extra")
       listOfMistakes.append(word_entered[i])
 
 
@@ -516,8 +415,7 @@ class OurEnvironment:
     self.gender = gender
     self.adapt_to_gender = adapt_to_gender
     self.gameIter = []
-    self.actions = [0, 1, 2, 3]
-    # self.actions = [0, 1, 2, 3, 4]    # actions: 0 - keep the theme and keep learning the problematic letter
+    self.actions = [0, 1, 2, 3]    # actions: 0 - keep the theme and keep learning the problematic letter
                                       # 1 - keep the theme and explore words with new letters
                                       # 2 - change the theme and keep learning the problematic letter
                                       # 3 - change the theme and explore words with new letters
@@ -540,15 +438,15 @@ class OurEnvironment:
     self.time_elapsed = 0               # time spent by student to write a recent word
     self.time_total = 0                 # overall time for all words in one episode
     self.list_of_lists = []             # list of all given words
-    self.list1 = crt_tuples()
+    self.list1 = ['апа', 'әже', 'бал', 'ваза', 'гүл', 'ғажап', 'дана', 'ерік', 'жауап', 'заман', 'ине', 'і', 'көмек', 'қасық', 'лас', 'мамыр', 'неке', 'ң', 'осал', 'өрт', 'патша', 'рақым', 'сәуле', 'таза', 'ушу', 'ұя', 'үй', 'фарш', 'хат', 'шаш', 'ш', 'ыдыс', 'ірімшік']
     self.list_of_lists.append(self.list1)
-    self.list2 = crt_tuples()
+    self.list2 = ['аға', 'әке', 'бала','вагон', 'гу', 'ғарыш', 'дау', 'ереже', 'жігіт', 'заң', 'ит', 'i', 'кеңес', 'қылыш', 'лай', 'мақсат', 'намыс', 'ң', 'от', 'өкім', 'піл', 'ру', 'сергек', 'тас', 'уәде', 'ұл', 'үй', 'факт', 'хабар', 'һ', 'шарт', 'ш', 'ырыс', 'із']
     self.list_of_lists.append(self.list2)
-    self.list3 = crt_tuples()
+    self.list3 = ['аргумент', 'барби', 'вальс', 'генерал', 'ғ', 'джем', 'евро', 'ж', 'зомби', 'интернет', 'i', 'конвертер', 'қ', 'лимон', 'мама', 'нота', 'ң', 'окей', 'ө', 'папа', 'робот', 'снайпер', 'танк', 'университет', 'ұ', 'ү', 'ф', 'фильм', 'хакер', 'ы', 'і', 'шоппинг']
     self.list_of_lists.append(self.list3)
-    self.list4 = crt_tuples()
+    self.list4 = ['ауф', 'әйи', 'буу', 'вах', 'гыа', 'ғаф', 'дей', 'ефу', 'жае', 'зим', 'исе', 'кук', 'қаң', 'лаф', 'мах', 'нао', 'ңа', 'фао', 'өйи', 'паф', 'рут', 'саю', 'тац', 'уей', 'ұп', 'үф', 'фаш', 'хас', 'һа', 'шуй', 'ымм', 'іди']
     self.list_of_lists.append(self.list4)
-    self.list5 = crt_tuples()
+    self.list5 = ['асқабақ', 'әлеуметтік', 'білезік', 'валенттілік', 'гуманитарлық', 'ғаламтор', 'денсаулық', 'егемендік', 'жүгері', 'заңдылық', 'и', 'игілік', 'кәсіптік', 'қанағаттандыру', 'лүпілдек', 'мүмкіндік', 'нәсихаттау', 'ң', 'одақтастыру', 'өзімшілдік', 'пікірлес', 'рәміздер', 'сәулетті', 'тітіркендіру', 'уылдырық', 'ұсақтау', 'үлпілдек', 'фракцияшылдық', 'хәзірет', 'шаруашылық', 'ынтымақ', 'ізгілік']
     self.list_of_lists.append(self.list5)
     self.counter = 1                     # count words (if 10 -> new episode)
     self.actions_codes = ["keep the theme and keep learning the problematic letter", "keep the theme and explore words with new letters", "change the theme and keep learning the problematic letter", "change the theme and explore words with new letters", "ask advice from adult"]
@@ -556,7 +454,13 @@ class OurEnvironment:
     self.end_time = time.time()
     self.start_time = time.time()
     self.word = ""
-    self.author = ""
+    if os.path.exists("users_data.csv"):
+      self.csv_file = open("users_data.csv", "a")
+    else:
+      self.csv_file = open("users_data.csv", "w")
+    self.writer = csv.writer(self.csv_file)
+    self.info = [self.id, 0, time.time(), 0, 0, 0, 0, []]
+    
 
  # this is a method for assessing a word to a student. Provide a word and wait him/her to rewrite it. Also count time for response
   # def interact(self, word):
@@ -584,10 +488,10 @@ class OurEnvironment:
       #print("predefined advice is off")
       self.theme = random.randint(0,len(self.list_of_lists)-1)
     if self.theme == 0:
-      self.logfile.write("Theme: quotes was selected. \n")
+      self.logfile.write("Theme: GIRLS was selected. \n")
       #print("theme: GIRLS was selected")
     elif self.theme == 1:
-      self.logfile.write("Theme: quotes was selected. \n")
+      self.logfile.write("Theme: BOYS was selected. \n")
       #print("theme: BOYS was selected")
     else:
       self.logfile.write("Theme: Others was selected. \n")
@@ -596,24 +500,14 @@ class OurEnvironment:
 
     # select a random word in the given theme
     word_index = random.randint(0,len(self.list_of_lists[self.theme])-1)
-    self.word = self.list_of_lists[self.theme][word_index][0]
-    ###################################
-    #self.word_copy = self.list_of_lists[self.theme][word_index][0]
-    #self.word_help = []
-    #for c in range(len(self.word_copy)):
-    #  if c != ' ' and c != '?' and c!='–' and c != '.'and c != '-' and c != ',' and c != '!'and c != ':':
-    #    self.word_help.append(self.word_copy[c])
-    #self.word = listToString(self.word_help)
-        ############################
-    self.author = self.list_of_lists[self.theme][word_index][1]
+    self.word = self.list_of_lists[self.theme][word_index]
     self.logfile.write("\n")
-    self.logfile.write("The quote assigned by database: " + self.word + "\n")
-    print("selected word: " + self.word)
+    self.logfile.write("The word assigned by database: " + self.word + "\n")
+    #print("selected word: " + self.word)
 
     # indicate explored letters
     for c in self.word:
-      if c != ' ' and c != '?' and c!='–' and c!='—' and c != '.' and c != ',':
-        self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1    
+      self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1     
     self.logfile.write("Updated list of remaining letters to explore: ")
     for idx in range(len(self.letters)):
       if self.letters[idx] == 0:
@@ -621,33 +515,32 @@ class OurEnvironment:
         #print(chr(idx + ord('a')), end = " ")
     #print("")
     self.logfile.write("\n")
+    self.info[4] = np.count_nonzero(self.letters)
     
 
 
-    # show the word to student, receive his/her response
-    #time_total = 0
-    #print(">>>>>interaction with student begins")
-    if len(self.author) != 0:
-      name = convert_kazakh_to_english(self.author)
-
-      text1 = "Could you please rewrite " + name + "'s following quote in Kazakh-Latin alphabet: " + self.word
-      text2 = "How the following quote of " + name + " would be written in Kazakh-Latin alphabet: "+ self.word
-      text3 = "Please rewrite " + name + "'s quote in Kazakh-Latin alphabet: " + self.word
-
-      random_text = random.choices([text1, text2, text3])
-    sent = bot.send_message(message.chat.id, random_text)
+    # show the word to student
+    sent = bot.send_message(message.chat.id, "Осы сөзді жазыңыз: " + self.word)
     self.start_time = time.time()
     #self.logfile.close()
+    self.info[3] = self.info[3] + 1
+
+############# FROM HERE ###########################
+    # the following commands the agent to wait a message from a user (when received methid process() starts)
     bot.register_next_step_handler(sent, self.process)
-  
 
   def process(self, message):
+    # the message of the user is obtained
     user_word = message.text
+############# UNTIL HERE ##########################
     self.end_time = time.time()
     self.logfile.write("User's trial: " + user_word + "\n")
     time_elapsed = self.end_time - self.start_time
     self.logfile.write("Time of this interaction: " + str(time_elapsed) + "\n")
-    self.time_total + time_elapsed
+    self.time_total = self.time_total + time_elapsed
+    self.info[1] = self.time_total
+    self.info[6] = self.time_total
+    self.info[7].append(time_elapsed)
 
     # record errors of  the student 
     print_corr = []
@@ -655,26 +548,25 @@ class OurEnvironment:
     helper = []
     if (len(wordCyrToLat(user_word)) == len(wordCyrToLat(self.word))):
       if (wordCyrToLat(user_word) != wordCyrToLat(self.word)):
-        helper = wrongLetters(user_word, wordCyrToLat(self.word))
-        #helper = wrongLetters(wordCyrToLat(user_word), wordCyrToLat(self.word))
+        helper = wrongLetters(wordCyrToLat(user_word), wordCyrToLat(self.word))
         tmp = 1
     else:
-      helper = wrongLetters(user_word, wordCyrToLat(self.word))
-    #  helper = wrongLetters(wordCyrToLat(user_word), wordCyrToLat(self.word))
+      helper = wrongLetters(wordCyrToLat(user_word), wordCyrToLat(self.word))
       tmp = 1
 
     for i in range(len(helper)):
-      if helper[i]!=' ' and helper[i] != '.' and helper[i]!='–' and helper[i]!= '—'  and helper[i] != '?'and helper[i] != '-'and helper[i] != ',' and helper[i] != '!'and helper[i] != ':'and helper[i] != ';':
-        if helper[i] not in self.errors:
-          self.errors.append(helper[i])
-          self.challenges = self.challenges + 1
+      if helper[i] not in self.errors:
+        self.errors.append(helper[i])
+        self.challenges = self.challenges + 1
 
     for i in range(len(self.word)):
       if (cyrToLat(self.word[i]) not in helper):
         print_corr.append(cyrToLat(self.word[i]))
       else:
-        print_corr.append(upperKazakh(cyrToLat(self.word[i])))
-
+        print_corr.append('.')
+        print_corr.append(cyrToLat(self.word[i]))
+        print_corr.append('.') 
+    self.info[5] = len(self.errors)
     self.logfile.write("Current problematic letters: ")
     for letter in self.errors:
       #print(letter, end = " ")
@@ -688,7 +580,8 @@ class OurEnvironment:
     else:
       bot.send_message(message.chat.id, "Correct!")
     #self.logfile.close()
-
+    self.writer.writerow(self.info)
+    self.csv_file.close()
     self.counter = self.counter + 1
     time_elapsed = time_elapsed//5
     if time_elapsed>10:
@@ -715,17 +608,15 @@ class OurEnvironment:
         changed = True
         self.logfile.write("No errors, action was changed to: " + self.actions_codes[action] + "\n")
       else:
-        tmp = [idx for idx in self.list_of_lists[self.theme] if cyrToLat(idx[0][0].lower()) in self.errors]
-        self.word = random.choice(tmp)[0]
+        tmp = [idx for idx in self.list_of_lists[self.theme] if cyrToLat(idx[0].lower()) in self.errors]
+        self.word = random.choice(tmp)
         self.logfile.write("\n")
         self.logfile.write("Next selected word: " + self.word + " resolves problematic letter " + cyrToLat(self.word[0]) + "\n")
-        self.errors.remove(cyrToLat(self.word[0].lower()))  # CORRECT THIS
+        self.errors.remove(cyrToLat(self.word[0]))  # CORRECT THIS
         self.logfile.write("Remaining problematic letters: "+ str(self.errors) + "\n")
-        print(self.word)
   #      self.score = self.score - 1
         for c in self.word:
-          if c != ' ' and c != '.' and c!='–' and c!= '—'  and c != '?'and c != '-'and c != ',' and c != '!'and c != ':'and c != ';':
-            self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1 
+          self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1 
         self.logfile.write("Updated list of remaining letters to explore: ")
         for idx in range(len(self.letters)):
           if self.letters[idx] == 0:
@@ -733,14 +624,12 @@ class OurEnvironment:
         self.logfile.write("\n")
  
     if action == 1:
-      tmp = [idx for idx in self.list_of_lists[self.theme] if self.letters[self.kazakh_letters.index(cyrToLat(idx[0][0].lower()))] == 0] 
-      self.word = random.choice(tmp)[0]
+      tmp = [idx for idx in self.list_of_lists[self.theme] if self.letters[self.kazakh_letters.index(cyrToLat(idx[0]))] == 0] 
+      self.word = random.choice(tmp)
       self.logfile.write("\n")
       self.logfile.write("Next selected word: " + self.word + "\n")
-      print(self.word)
       for c in self.word:
-        if c != ' ' and c != '.' and c != '?'and c != '-' and c != ',' and c!='–'and c!='—' and c != '!'and c != ':'and c != ';':
-          self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1
+        self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1
       self.logfile.write("Updated list of remaining letters to explore: ")
       for idx in range(len(self.letters)):
         if self.letters[idx] == 0:
@@ -757,16 +646,14 @@ class OurEnvironment:
         self.logfile.write("Theme changed from " + str(self.theme))
         self.theme = random.randint(0, 2)
         self.logfile.write(" to " + str(self.theme) + "\n")
-        tmp = [idx for idx in self.list_of_lists[self.theme] if cyrToLat(idx[0][0].lower()) in self.errors]
-        self.word = random.choice(tmp)[0]
+        tmp = [idx for idx in self.list_of_lists[self.theme] if cyrToLat(idx[0].lower()) in self.errors]
+        self.word = random.choice(tmp)
         self.logfile.write("\n")
         self.logfile.write("Next selected word: " + self.word + " resolves problematic letter " + cyrToLat(self.word[0]) + "\n")
-        self.errors.remove(cyrToLat(self.word[0].lower()))
-        print(self.word)
+        self.errors.remove(cyrToLat(self.word[0]))
   #      self.score = self.score - 1
         for c in self.word:
-          if c != ' ' and c != '.'  and c != '?'and c != '-'and c!='—'and c != ',' and c!='–' and c != '!'and c != ':'and c != ';':
-            self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1
+          self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1
         self.logfile.write("Updated list of remaining letters to explore:")
         for idx in range(len(self.letters)):
           if self.letters[idx] == 0:
@@ -777,21 +664,19 @@ class OurEnvironment:
       self.logfile.write("Theme changed from " + str(self.theme))
       self.theme = random.randint(0, 2)
       self.logfile.write(" to " + str(self.theme) + "\n")
-      tmp = [idx for idx in self.list_of_lists[self.theme] if self.letters[self.kazakh_letters.index(cyrToLat(idx[0][0].lower()))] == 0]
-      self.word = random.choice(tmp)[0]
+      tmp = [idx for idx in self.list_of_lists[self.theme] if self.letters[self.kazakh_letters.index(cyrToLat(idx[0]))] == 0]
+      self.word = random.choice(tmp)
       self.logfile.write("\n")
       self.logfile.write("Next selected word: " + self.word + "\n")
-      print(self.word)
       for c in self.word:
-        if c != ' ' and c!='–'and c!='—' and c != '.' and c != '?' and c != '-'and c != ',' and c != '!'and c != ':'and c != ';':
-          self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1
+        self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1
       self.logfile.write("Updated list of remaining letters to explore:")
       for idx in range(len(self.letters)):
         if self.letters[idx] == 0:
           self.logfile.write(self.kazakh_letters[idx] + " ")
       self.logfile.write("\n")
     
-    # ask advice
+    # # ask advice
     # if action == 4:
     #   bool_var = 0
     #   while bool_var == 0:
@@ -809,55 +694,56 @@ class OurEnvironment:
     #             print(self.kazakh_letters[idx], end = " ")
     #         print("")
     #         bool_var = 1
-
+    
+    self.info[4] = np.count_nonzero(self.letters)
     #print(">>>>>interaction with student begins")
-    if len(self.author) != 0:
-      name = convert_kazakh_to_english(self.author)
-
-      text1 = "Could you please rewrite " + name + "'s following quote in Kazakh-Latin alphabet: " + self.word
-      text2 = "How the following quote of " + name + " would be written in Kazakh-Latin alphabet: "+ self.word
-      text3 = "Please rewrite " + name + "'s quote in Kazakh-Latin alphabet: " + self.word
-
-      random_text = random.choices([text1, text2, text3])
-    sent2 = bot.send_message(message.chat.id, random_text)
+    sent2 = bot.send_message(message.chat.id, "Осы сөзді жазыңыз: " +  self.word)
     self.start_time = time.time()
     self.logfile.close()
+    self.info[3] = self.info[3] + 1
+
+############# FROM HERE ###########################
     bot.register_next_step_handler(sent2, self.process2, action, state)
 
   def process2(self, message, action, state):
-    self.logfile = open(str(self.id)+".txt", "a")
     user_word = message.text
+
+############# UNTIL HERE ##########################
+
+    self.logfile = open(str(self.id)+".txt", "a")
     self.logfile.write("User's trial: " + user_word + "\n")
     self.end_time = time.time()
     time_elapsed = self.end_time - self.start_time
+    self.info[1] = self.info[1] + time_elapsed
     self.logfile.write("Time of this interaction: " + str(time_elapsed) + "\n")
     self.time_total = self.time_total + time_elapsed
+    self.info[6] = (self.info[6]*(self.counter - 1) + time_elapsed)/self.counter
+    self.info[7].append(time_elapsed)
 
     print_corr = []
     tmp = 0
     helper = []
     if (len(wordCyrToLat(user_word)) == len(wordCyrToLat(self.word))):
       if (wordCyrToLat(user_word) != wordCyrToLat(self.word)):
-        helper = wrongLetters(user_word, wordCyrToLat(self.word))
-        #helper = wrongLetters(wordCyrToLat(user_word), wordCyrToLat(self.word))
+        helper = wrongLetters(wordCyrToLat(user_word), wordCyrToLat(self.word))
         tmp = 1
     else:
-      helper = wrongLetters(user_word, wordCyrToLat(self.word))
-      #helper = wrongLetters(wordCyrToLat(user_word), wordCyrToLat(self.word))
+      helper = wrongLetters(wordCyrToLat(user_word), wordCyrToLat(self.word))
       tmp = 1
 
     for i in range(len(helper)):
-      if helper[i]!=' ' and helper[i] != '.' and helper[i]!='–' and helper[i]!= '—'  and helper[i] != '?'and helper[i] != '-'and helper[i] != ',' and helper[i] != '!'and helper[i] != ':'and helper[i] != ';':
-        if helper[i] not in self.errors:
-          self.errors.append(helper[i])
-          self.challenges = self.challenges + 1
+      if helper[i] not in self.errors:
+        self.errors.append(helper[i])
+        self.challenges = self.challenges + 1
 
     for i in range(len(self.word)):
       if (cyrToLat(self.word[i]) not in helper):
         print_corr.append(cyrToLat(self.word[i]))
       else:
-        print_corr.append(upperKazakh(cyrToLat(self.word[i])))
-    
+        print_corr.append('.')
+        print_corr.append(cyrToLat(self.word[i]))
+        print_corr.append('.') 
+    self.info[5] = len(self.errors)
     self.logfile.write("Current problematic letters: ")
     for letter in self.errors:
       self.logfile.write(letter + " ")
@@ -869,7 +755,20 @@ class OurEnvironment:
       bot.send_message(message.chat.id, print_corr2.join(print_corr))
     else:
       bot.send_message(message.chat.id, "Correct!")
-
+    self.csv_file = open("users_data.csv", "r")
+    lines=csv.reader(self.csv_file,delimiter='\n')
+    
+    tmp = []
+    for line in lines:
+      tmp.append(line)
+    tmp.pop()
+    self.csv_file.close()
+    self.csv_file = open("users_data.csv", "w+")
+    self.writer = csv.writer(self.csv_file)
+    for t in tmp:
+      self.writer.writerow(t)
+    self.writer.writerow(self.info)
+    self.csv_file.close()
     next_state = []
     next_state.append('num of letters: ' + str(26 - np.count_nonzero(self.letters)))
     next_state.append('time: ' + str(time_elapsed))
@@ -910,17 +809,15 @@ class OurEnvironment:
         changed = True
         self.logfile.write("No errors, action was changed to: " + self.actions_codes[action] + "\n")
       else:
-        tmp = [idx for idx in self.list_of_lists[self.theme] if cyrToLat(idx[0][0].lower()) in self.errors]
-        self.word = random.choice(tmp)[0]
+        tmp = [idx for idx in self.list_of_lists[self.theme] if cyrToLat(idx[0].lower()) in self.errors]
+        self.word = random.choice(tmp)
         self.logfile.write("\n")
         self.logfile.write("Next selected word: " + self.word + " resolves problematic letter " + cyrToLat(self.word[0]) + "\n")
-        self.errors.remove(cyrToLat(self.word[0].lower()))
+        self.errors.remove(cyrToLat(self.word[0]))
         self.logfile.write("Remaining problematic letters: "+ str(self.errors) + "\n")
-        print(self.word)
   #      self.score = self.score - 1
         for c in self.word:
-          if c != ' ' and c!='–' and c!='—' and c != '?'and c != '.'and c != '-' and c != ',' and c != '!'and c != ':'and c != ';' :
-            self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1 
+          self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1 
         self.logfile.write("Updated list of remaining letters to explore: ")
         for idx in range(len(self.letters)):
           if self.letters[idx] == 0:
@@ -928,14 +825,12 @@ class OurEnvironment:
         self.logfile.write("\n")
  
     if action == 1:
-      tmp = [idx for idx in self.list_of_lists[self.theme] if self.letters[self.kazakh_letters.index(cyrToLat(idx[0][0].lower()))] == 0] 
-      self.word = random.choice(tmp)[0]
+      tmp = [idx for idx in self.list_of_lists[self.theme] if self.letters[self.kazakh_letters.index(cyrToLat(idx[0]))] == 0] 
+      self.word = random.choice(tmp)
       self.logfile.write("\n")
       self.logfile.write("Next selected word: " + self.word + "\n")
-      print(self.word)
       for c in self.word:
-        if c != ' 'and c!='—' and c!='–' and c != '?' and c != '.' and c != '-'and c != ',' and c != '!'and c != ':'and c != ';':
-          self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1
+        self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1
       self.logfile.write("Updated list of remaining letters to explore: ")
       for idx in range(len(self.letters)):
         if self.letters[idx] == 0:
@@ -952,16 +847,14 @@ class OurEnvironment:
         self.logfile.write("Theme changed from " + str(self.theme))
         self.theme = random.randint(0, 2)
         self.logfile.write(" to " + str(self.theme) + "\n")
-        tmp = [idx for idx in self.list_of_lists[self.theme] if cyrToLat(idx[0][0].lower()) in self.errors]
-        self.word = random.choice(tmp)[0]
+        tmp = [idx for idx in self.list_of_lists[self.theme] if cyrToLat(idx[0].lower()) in self.errors]
+        self.word = random.choice(tmp)
         self.logfile.write("\n")
         self.logfile.write("Next selected word: " + self.word + " resolves problematic letter " + cyrToLat(self.word[0]) + "\n")
-        self.errors.remove(cyrToLat(self.word[0].lower()))
-        print(self.word)
+        self.errors.remove(cyrToLat(self.word[0]))
   #      self.score = self.score - 1
         for c in self.word:
-          if c != ' ' and c!='–'and c!='—' and c != '.' and c != '?' and c != '-'and c != ',' and c != '!'and c != ':'and c != ';':
-            self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1
+          self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1
         self.logfile.write("Updated list of remaining letters to explore:")
         for idx in range(len(self.letters)):
           if self.letters[idx] == 0:
@@ -972,31 +865,19 @@ class OurEnvironment:
       self.logfile.write("Theme changed from " + str(self.theme))
       self.theme = random.randint(0, 2)
       self.logfile.write(" to " + str(self.theme) + "\n")
-      sublist = []
-      for j in range(len(self.kazakh_letters)):
-        if self.letters[j]==0:
-          sublist.append(self.kazakh_letters[j])
-      if len(sublist)!=0:
-        tmp = [idx for idx in self.list_of_lists[self.theme] if random.choice(sublist) in idx[0]]
-        if len(tmp) != 0:
-          self.word = random.choice(tmp)[0]
-        else:
-          self.word = self.word = random.choice( self.list_of_lists[self.theme])[0]
-      else:
-        self.word = random.choice( self.list_of_lists[self.theme])[0]
+      tmp = [idx for idx in self.list_of_lists[self.theme] if self.letters[self.kazakh_letters.index(cyrToLat(idx[0]))] == 0]
+      self.word = random.choice(tmp)
       self.logfile.write("\n")
       self.logfile.write("Next selected word: " + self.word + "\n")
-      print(self.word)
       for c in self.word:
-        if c != ' ' and c!='–'and c!='—' and c != '.'  and c != '?'and c != '-'and c != ',' and c != '!'and c != ':'and c != ';':
-          self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1
+        self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1
       self.logfile.write("Updated list of remaining letters to explore:")
       for idx in range(len(self.letters)):
         if self.letters[idx] == 0:
           self.logfile.write(self.kazakh_letters[idx] + " ")
       self.logfile.write("\n")
     
-    # ask advice
+    # # ask advice
     # if action == 4:
     #   bool_var = 0
     #   while bool_var == 0:
@@ -1014,23 +895,15 @@ class OurEnvironment:
     #             print(self.kazakh_letters[idx], end = " ")
     #         print("")
     #         bool_var = 1
-
-    #print(">>>>>interaction with student begins")
-    
-
+    self.info[4] = np.count_nonzero(self.letters)
     self.logfile.close()
     if self.counter < 10:
-      if len(self.author) != 0:
-        name = convert_kazakh_to_english(self.author)
-
-        text1 = "Could you please rewrite " + name + "'s following quote in Kazakh-Latin alphabet: " + self.word
-        text2 = "How the following quote of " + name + " would be written in Kazakh-Latin alphabet: "+ self.word
-        text3 = "Please rewrite " + name + "'s quote in Kazakh-Latin alphabet: " + self.word
-
-        random_text = random.choices([text1, text2, text3])
-      sent2 = bot.send_message(message.chat.id, random_text)
+      sent2 = bot.send_message(message.chat.id, "Осы сөзді жазыңыз: " +  self.word)
       self.start_time = time.time()
+      self.info[3] = self.info[3] + 1
+############# FROM HERE ###########################
       bot.register_next_step_handler(sent2, self.process2, action, state)
+############# UNTIL HERE ##########################
     else:
       self.saveQValues()
       bot.send_message(message.chat.id, "Thank you for your time!")
@@ -1038,31 +911,16 @@ class OurEnvironment:
 
 
 
-#   def end_episode(self):
-# # additional reward implementation
-#     reward = - len(self.errors) - (self.letters.size - np.count_nonzero(self.letters)) + self.challenges
-#     print("additional reward: " + str(reward))
-#     return reward
 
-# actions = [0, 1, 2, 3, 4]    # actions: 0 - keep the theme and keep learning the problematic letter
-#                                   # 1 - keep the theme and explore words with new letters
-#                                   # 2 - change the theme and keep learning the problematic letter
-#                                   # 3 - change the theme and explore words with new letters
-#                                   # 4 - ask advice from adult
-
-# qValues = defaultdict(float) # table of action-values (values of state x action pair)
-# env = OurEnvironment(gender, adapt_to_gender)      # set the CoWriting environment. Specify the gender of a student and whether it needs to be considered as a pre-advice
 
   def act(self, state, epsilon):
       # this is an implementation of epsilon-greedy policy
       if random.random() < epsilon:
-        #return random.randint(0, 4)
         return random.randint(0, 3)
   
       qValues = [self.qValues.get((state, action), 0) for action in self.actions]
   
       if np.all((qValues == 0)):
-        #return random.randint(0, 4)
         return random.randint(0, 3)
       else:
         return np.argmax(qValues)
@@ -1073,8 +931,12 @@ class OurEnvironment:
 def episode_start(message):
   env = OurEnvironment(0, message.chat.id)
   env.start_episode(message)
-  
-  
+  if os.path.exists("users_data.csv"):
+    csvv = open("u_data.csv", "a", newline = '')
+  else:
+    csvv = open("u_data.csv", "w")
+  writer = csv.writer(csvv)
+  writer.writerow(env.info)
 
 bot.polling()
 
