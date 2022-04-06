@@ -443,53 +443,157 @@ def please_try_typing (n):
 def no_mistakes ():
   n = random.randint(0,8)
   if (n == 0):
-    return "Wow! You really are a genius!"
+    return "Wow! You really are a genius! 🤩"
   elif (n == 1):
-    return "Excellent!"
+    return "Excellent! 🤩"
   elif (n == 2):
-    return "Super!"
+    return "Super! 🤩"
   elif (n == 3):
-    return "You’re doing great!"
+    return "You’re doing great! 🤩"
   elif (n == 4):
-    return "Perfect!"
+    return "Perfect! 🤩"
   elif (n == 5):
-    return "Way to go!"
+    return "Way to go! 🤩"
   elif (n == 6):
-    return "Look at you, converting letters like a pro!"
+    return "Look at you, converting letters like a pro! 🤩"
   elif (n == 7):
-    return "You sure have a way with words!"
+    return "You sure have a way with words! 🤩"
   elif (n == 8):
-    return "You’re a word converting machine!"
+    return "You’re a word converting machine! 🤩"
 
 
 def one_mistake ():
   n = random.randint(0,5)
   if (n == 0):
-    return "Almost there! You should try again."
+    return "Almost there! You should try again. 🤓"
   elif (n == 1):
-    return "Well, that was really close! Keep going!"
+    return "Well, that was really close! Keep going! 🤓"
   elif (n == 2):
-    return "Give it another shot!"
+    return "Give it another shot! 🤓"
   elif (n == 3):
-    return "99% accuracy, let’s get that lost one"
+    return "99% accuracy, let’s get that lost one 🤓"
   elif (n == 4):
-    return "You got the point! We are very close to perfection"
+    return "You got the point! We are very close to perfection 🤓"
   elif (n == 5):
-    return "So close! Go on!"
+    return "So close! Go on! 🤓"
 
 
 def more_than_one_mistake ():
   n = random.randint(0,3)
   if (n == 0):
-    return "I’m sure you can do better than this!"
+    return "I’m sure you can do better than this! 😛"
   elif (n == 1):
-    return "That wasn’t bad! Maybe you should try harder…"
+    return "That wasn’t bad! Maybe you should try harder… 😛"
   elif (n == 2):
-    return "I do not like to tell people that they are wrong, but I can’t be silent this time!"
+    return "I do not like to tell people that they are wrong, but I can’t be silent this time! 😛"
   elif (n == 3):
-    return "One day I will tell everybody that I taught you, but today we have many things to work on together"
+    return "One day I will tell everybody that I taught you, but today we have many things to work on together 😛"
 
   
+
+def reversedLetters (word_entered, word_given, index):
+  # if entered is less than given
+
+  if (len(word_entered)<=len(word_given)):
+    if (word_entered[index] != word_given[index]):
+      # check first if there is any extra letter after this
+      if (index+1 < len(word_entered)):
+        if ((word_entered[index+1] == word_given[index]) and (word_entered[index] == word_given[index+1])):
+          a = [word_entered[index], word_entered[index+1]]
+          #print("REVERSED")
+          return a
+        else:
+          return ''
+      else:
+        return ''
+
+  # if entered is bigger than given
+  else:
+    if (word_entered[index] != word_given[index]):
+      # check first if there is any extra letter after this
+      if (index+1 < len(word_given)):
+        if ((word_entered[index+1] == word_given[index]) and (word_entered[index] == word_given[index+1])):
+          a = word_entered[index], word_entered[index+1]
+          #print("REVERSED")
+          return a
+        else:
+          return ''
+      else:
+        return ''
+
+def missedLetter (word_entered, word_given, index):
+  if (len(word_entered)<=len(word_given)):
+    if (word_entered[index] != word_given[index]):
+      # check first if there is any extra letter after this
+      if (len(word_entered) == len(word_given)):
+        i = index + 1
+      else:
+        i = index
+      if (i < len(word_entered)):
+        if (word_entered[index] == word_given[index+1]):
+          a = word_given[index]
+          #print("MISSEDLETTER")
+          return a
+        else:
+          return ''
+      else:
+        return ''
+
+  # if entered is bigger than given
+  else:
+    if (word_entered[index] != word_given[index]):
+      # check first if there is any extra letter after this
+      if (len(word_entered) == len(word_given)):
+        i = index + 1
+      else:
+        i = index + 1
+      if (i < len(word_given)):
+        if (word_entered[index] == word_given[index+1]):
+          a = [word_given[index]]
+          #print("MISSEDLETTER")
+          return a
+        else:
+          return ''
+      else:
+        return ''
+
+def extraLetter (word_entered, word_given, index):
+  if (len(word_entered)<=len(word_given)):
+    if (word_entered[index] != word_given[index]):
+      if (len(word_entered) == len(word_given)):
+        i = index + 1
+      else:
+        i = index
+      # check first if there is any extra letter after this
+      if (i < len(word_entered)-1):
+        if (word_entered[index+1] == word_given[index]):
+          a = [word_given[index]]
+          #print("EXTRALETTER")
+          return a
+        else:
+          return ''
+      else:
+        return ''
+
+  # if entered is bigger than given
+  else:
+    if (word_entered[index] != word_given[index]):
+      if (len(word_entered) == len(word_given)):
+        i = index + 1
+      else:
+        i = index
+      # check first if there is any extra letter after this
+      if (i < len(word_given)):
+        if (word_entered[index+1] == word_given[index]):
+          a = [word_given[index]]
+          #print("EXTRALETTER")
+          return a
+        else:
+          return ''
+      else:
+        return ''
+
+
 
 def reversedLetters (word_entered, word_given, index):
   # if entered is less than given
@@ -630,8 +734,11 @@ def wrongLetters (word_entered, word_given):
               i = i - 1
             else:
               #print("MISSSPELLED")
+              if (word_given[i] == ' '):
+                listOfMistakes.append(word_entered[i])
+              else:
+                listOfMistakes.append(word_given[i])
               word_entered[i] = word_given[i]
-              listOfMistakes.append(word_given[i])
 
   
 # if entered is bigger than given
@@ -660,8 +767,11 @@ def wrongLetters (word_entered, word_given):
               i = i - 1;
             else:
               #print("MISSSPELLED")
+              if (word_given[i] == ' '):
+                listOfMistakes.append(word_entered[i])
+              else:
+                listOfMistakes.append(word_given[i])
               word_entered[i] = word_given[i]
-              listOfMistakes.append(word_given[i])
     i = i + 1;
   if (len(word_entered) < len(word_given)):
     for i in range(len(word_entered), len(word_given)):
@@ -676,16 +786,57 @@ def wrongLetters (word_entered, word_given):
 
   return listOfMistakes
 
-def wrongLetters_phrase(phrase_user, phrase_actual):
+def wrongLetters_phrase_word_split(phrase_user, phrase_actual):
   list_phrase_user = phrase_user.split()
   list_phrase_actual = phrase_actual.split()
+  for i in range (0,len(list_phrase_actual)):
+    list_phrase_user.append('')
+  for i in range (0,len(list_phrase_user)):
+    list_phrase_actual.append('')
   listOfMistakes = []
-  for i in range (0, len(list_phrase_user)):
-    helper = wrongLetters(stringToList(list_phrase_user[i]), stringToList(list_phrase_actual[i]))
-    for j in range (0, len(helper)):
+  for i in range(0,min(len(list_phrase_user), len(list_phrase_actual))):
+    helper = wrongLetters(list_phrase_user[i], list_phrase_actual[i])
+    for j in range(0, len(helper)):
       listOfMistakes.append(helper[j])
   
   return listOfMistakes
+
+
+def wrongLetters_phrase(phrase_user, phrase_actual):
+  list_phrase_user = phrase_user.split()
+  list_phrase_actual = phrase_actual.split()
+  #for i in range (0,max(len(list_phrase_user), len(list_phrase_actual))+1):
+  for i in range (0,len(list_phrase_actual)):
+    list_phrase_user.append('')
+  for i in range (0,len(list_phrase_user)):
+    list_phrase_actual.append('')
+
+  list_of_listOfMistakes = []
+  for i in range(0,min(len(list_phrase_user), len(list_phrase_actual))+1):
+    listOfMistakes = []
+
+    helper1 = wrongLetters(''.join(list_phrase_user[:i]), ''.join(list_phrase_actual[:i]))
+    helper2 = wrongLetters_phrase_word_split(' '.join(list_phrase_user[i:]), ' '.join(list_phrase_actual[i:]))
+    
+    for j in range(0, len(helper1)):
+      listOfMistakes.append(helper1[j])
+    for j in range(0, len(helper2)):
+      listOfMistakes.append(helper2[j])
+
+
+    
+    while ' ' in listOfMistakes:
+      listOfMistakes.remove(' ')
+
+    list_of_listOfMistakes.append(listOfMistakes)
+
+    #print("HERE IS A LIST: ", helper1, helper2, listOfMistakes)
+  
+  return min(list_of_listOfMistakes, key=len)
+    
+
+
+
 
   
 def count_letters_weights(phrase):
@@ -991,14 +1142,14 @@ class OurEnvironment:
     if len(self.author) > 10:
       name = convert_kazakh_to_english(self.author)
 
-      text1 = "Could you please rewrite " + name + "'s following quote using Kazakh-Latin alphabet: " + self.word
-      text2 = "How the following quote of " + name + " would be written using Kazakh-Latin alphabet: "+ self.word
-      text3 = "Please rewrite " + name + "'s quote using Kazakh-Latin alphabet: " + self.word
+      text1 = "Could you please rewrite " + name + "'s following quote using Kazakh-Latin alphabet: \n⌨️ " + self.word
+      text2 = "How the following quote of " + name + " would be written using Kazakh-Latin alphabet: \n⌨️ "+ self.word
+      text3 = "Please rewrite " + name + "'s quote using Kazakh-Latin alphabet: \n⌨️ " + self.word
     else:
       
-      text1 = "Could you please write the following using Kazakh-Latin alphabet: "+ self.word
-      text2 = "How this phrase would look like using Kazakh-Latin alphabet: "+ self.word
-      text3 = "Please rewrite the following using Kazakh-Latin alphabet: "+ self.word
+      text1 = "Could you please write the following using Kazakh-Latin alphabet: \n⌨️ "+ self.word
+      text2 = "How this phrase would look like using Kazakh-Latin alphabet: \n⌨️ "+ self.word
+      text3 = "Please rewrite the following using Kazakh-Latin alphabet: \n⌨️ "+ self.word
 
     self.letters_copy = self.letters
     self.challenges_copy = self.challenges
@@ -1021,7 +1172,7 @@ class OurEnvironment:
 
     markup.row(buttonA, buttonB)
 
-    bot.send_message(self.id, 'Did you liked this interaction?', reply_markup=markup)
+    bot.send_message(self.id, '🙃 ---End of the section--- 🙂\n'+'Did you like this interaction?', reply_markup=markup)
 
   def greet(self, id):
 
@@ -1047,7 +1198,7 @@ class OurEnvironment:
 
     markup.row(buttonA, buttonB)
 
-    bot.send_message(self.id, 'Did you liked this phrase?', reply_markup=markup) 
+    bot.send_message(self.id, 'Did you like this phrase?', reply_markup=markup) 
 
   def process(self, message):
     user_word_written = message.text
@@ -1083,7 +1234,8 @@ class OurEnvironment:
     #  helper = wrongLetters(wordCyrToLat(user_word), wordCyrToLat(self.word))
       tmp = 1
 
-    if (len(user_word_list) < len(stringToList(wordCyrToLat(self.word)))/2 or len(helper) > len(user_word_list)*0.8 or len(user_word.split()) <= 1):
+    #if (len(user_word_list) < len(stringToList(wordCyrToLat(self.word)))/2 or len(helper) > len(user_word_list)*0.8 or len(user_word.split()) <= 1):
+    if len(helper) > len(user_word_list)*0.55:
       print("bileberda")
       self.letters = self.letters_copy
       self.challenges = self.challenges_copy
@@ -1092,7 +1244,7 @@ class OurEnvironment:
       
     else:
       for i in range(len(helper)):
-        if helper[i]!=' ' and helper[i] != '.' and helper[i]!='–' and helper[i]!= '—'  and helper[i] != '?'and helper[i] != '-'and helper[i] != ',' and helper[i] != '!'and helper[i] != ':'and helper[i] != ';':
+        if helper[i]!=' ' and helper[i] != '.' and helper[i]!='–' and helper[i]!= '—'  and helper[i] != '?'and helper[i] != '-'and helper[i] != ',' and helper[i] != '!'and helper[i] != ':'and helper[i] != ';' and helper[i] != '…':
           if letter_score(helper[i])==1:
             if helper[i] not in self.errors_easy:
               self.errors_easy.append(helper[i])
@@ -1106,11 +1258,18 @@ class OurEnvironment:
     self.err_hst.append(len(self.errors_easy) + 3*len(self.errors_hard))
     for i in range(len(self.word)):
       if (cyrToLat(self.word[i]) not in helper):
-        print_corr.append(cyrToLat(self.word[i]))
+        if (i == 0):
+          print_corr.append(upperKazakh(cyrToLat(self.word[i])))
+        else:
+          print_corr.append(cyrToLat(self.word[i]))
       else:
+        if (i == 0):
+          print_corr.append(upperKazakh(cyrToLat(self.word[i])))
+        else:
+          print_corr.append(cyrToLat(self.word[i]))
         #print_corr.append(upperKazakh(cyrToLat(self.word[i])))
         #hasError = 1
-        print_corr.append(cyrToLat(self.word[i]))
+        
 
         
     self.info[5] = len(self.errors_easy) + len(self.errors_hard)
@@ -1134,7 +1293,8 @@ class OurEnvironment:
         bot.send_message(message.chat.id, one_mistake())
       else:
         bot.send_message(message.chat.id, more_than_one_mistake ())
-      bot.send_message(message.chat.id, 'The correct writing is:'+print_corr2.join(print_corr))
+        #the correct writing is:
+      bot.send_message(message.chat.id, '✅ '+print_corr2.join(print_corr))
     else:
       bot.send_message(message.chat.id, no_mistakes())
     #self.logfile.close()
@@ -1152,9 +1312,9 @@ class OurEnvironment:
     self.getLike(self.id, self.counter)
     
     self.counter = self.counter + 1
-    # time_elapsed = time_elapsed//5
-    # if time_elapsed>24:
-    #   time_elapsed = 24
+    time_elapsed = time_elapsed//5
+    if time_elapsed>24:
+      time_elapsed = 24
     self.state_lettersRL = []
     self.state_levelRL = []
     specifics = 0
@@ -1165,22 +1325,26 @@ class OurEnvironment:
       elif self.letters[i]==0 and letter_score(self.kazakh_letters[i])==3:
         commons = commons + 1
     sp = 0
-    if specifics < 1:
+    if specifics <= 1:
       sp = 0
-    elif specifics <= 5:
+    elif specifics < 5:
       sp = 1
-    else:
+    elif specifics < 9:
       sp = 2
+    else:
+      sp = 3
     self.state_lettersRL.append('unexplored spec. lett-s score: ' + str(sp))
 
 
     cm = 0
     if commons == 0:
       cm = 0
-    elif commons < 6:
+    elif commons < 3:
       cm = 1
-    else:
+    elif commons < 6:
       cm = 2
+    else:
+      cm = 3
     self.state_lettersRL.append('unexplored com. lett-s score: ' + str(cm))
     
     sp = 0
@@ -1188,19 +1352,23 @@ class OurEnvironment:
     errors_easy = len(self.errors_easy)
     if errors_easy == 0:
       cm = 0
-    elif errors_easy < 4:
+    elif errors_easy < 3:
       cm = 1
-    else:
+    elif errors_easy < 6:
       cm = 2
+    else:
+      cm = 3
     self.state_lettersRL.append('num of com. errors: ' + str(cm))
         
     errors_hard = len(self.errors_hard)
     if errors_hard == 0:
       sp = 0
-    elif errors_hard < 6:
+    elif errors_hard < 3:
       sp = 1
-    else:
+    elif errors_hard < 6:
       sp = 2
+    else:
+      sp = 3
     self.state_lettersRL.append('num of spec. errors: ' + str(sp))
     self.state_lettersRL = ' '.join(self.state_lettersRL)
     
@@ -1219,18 +1387,23 @@ class OurEnvironment:
       
     #self.state.append('gender: ' + str(self.gender))
     
-    proportion = 0
-    if len(self.word)/time_elapsed >= 0.3 and len(self.word)/time_elapsed < 0.6: 
-      proportion = 0
-    elif len(self.word)/time_elapsed < 4 and len(self.word)/time_elapsed >= 0.6:
-      proportion = 1
-    else:
-      proportion = 2
-    self.state_levelRL.append('time proportion: ' + str(proportion))
+    # proportion = 0
+    # if time_elapsed/len(self.word) < 0.05:
+    #   proportion = 0
+    # elif time_elapsed/len(self.word) < 0.14 and time_elapsed/len(self.word)>=0.05: 
+    #   proportion = 1
+    # elif time_elapsed/len(self.word) < 0.23 and time_elapsed/len(self.word)>=0.14:
+    #   proportion = 2
+    # else:
+    #   proportion = 3
+    # self.state_levelRL.append('time proportion: ' + str(proportion))
+    # self.state_levelRL = ' '.join(self.state_levelRL)
     slope = 0
     if len(self.err_hst)>1:
         slope,sh = np.polyfit(list(range(0, len(self.err_hst))), self.err_hst, 1)
-    if slope < 0:
+    if slope < -0.25:
+      slope = 0
+    elif slope >= -0.25 and slope < 0:
       slope = 1
     elif slope >= 0 and slope < 0.25:
       slope = 2
@@ -1238,14 +1411,6 @@ class OurEnvironment:
       slope = 3
 
     self.state_levelRL.append('current slope ' + str(slope))
-
-
-    if len(self.err_hst) < 5:
-      self.state_levelRL.append('current half of epoch 0')
-    else:
-      self.state_levelRL.append('current half of epoch 1')
-
-    
     self.state_levelRL = ' '.join(self.state_levelRL)
     
     self.action_lettersRL = self.act_lettersRL(self.state_lettersRL, self.epsilon)
@@ -1582,14 +1747,14 @@ class OurEnvironment:
     if len(self.author) > 10:
       name = convert_kazakh_to_english(self.author)
 
-      text1 = "Could you please rewrite " + name + "'s following quote using Kazakh-Latin alphabet: " + self.word
-      text2 = "How the following quote of " + name + " would be written using Kazakh-Latin alphabet: "+ self.word
-      text3 = "Please rewrite " + name + "'s quote using Kazakh-Latin alphabet: " + self.word
+      text1 = "Could you please rewrite " + name + "'s following quote using Kazakh-Latin alphabet: \n⌨️ " + self.word
+      text2 = "How the following quote of " + name + " would be written using Kazakh-Latin alphabet: \n⌨️ "+ self.word
+      text3 = "Please rewrite " + name + "'s quote using Kazakh-Latin alphabet: \n⌨️ " + self.word
     else:
       
-      text1 = "Could you please write the following using Kazakh-Latin alphabet: "+ self.word
-      text2 = "How this phrase would look like using Kazakh-Latin alphabet: "+ self.word
-      text3 = "Please rewrite the following using Kazakh-Latin alphabet: "+ self.word
+      text1 = "Could you please write the following using Kazakh-Latin alphabet: \n⌨️ "+ self.word
+      text2 = "How this phrase would look like using Kazakh-Latin alphabet: \n⌨️ "+ self.word
+      text3 = "Please rewrite the following using Kazakh-Latin alphabet: \n⌨️ "+ self.word
 
 
       if (self.action_lettersRL == 0 or self.action_lettersRL == 2):
@@ -1621,9 +1786,9 @@ class OurEnvironment:
     self.info[1] = round(self.info[1] + self.time_total, 2)
     self.info[6] = round((self.info[6]*(self.counter - 1) + self.time_elapsed)/self.counter, 2)
     self.info[7].append(round(self.time_elapsed, 2))
-    # self.time_elapsed = self.time_elapsed//5
-    # if self.time_elapsed>24:
-    #   self.time_elapsed = 24
+    self.time_elapsed = self.time_elapsed//5
+    if self.time_elapsed>24:
+      self.time_elapsed = 24
     user_word_list = []
     for i in range(len(user_word_written)):
       user_word_list.append(lowerKazakh(user_word_written[i]))
@@ -1641,7 +1806,8 @@ class OurEnvironment:
       #helper = wrongLetters(wordCyrToLat(user_word), wordCyrToLat(self.word))
       tmp = 1
 
-    if (len(user_word_list) < len(stringToList(wordCyrToLat(self.word)))/2 or len(helper) > len(user_word_list)*0.8 or len(user_word.split()) <= 1): 
+    #if (len(user_word_list) < len(stringToList(wordCyrToLat(self.word)))/2 or len(helper) > len(user_word_list)*0.8 or len(user_word.split()) <= 1):
+    if len(helper) > len(user_word_list)*0.55:
       print("bileberda")
       self.letters = self.letters_copy
       self.challenges = self.challenges_copy
@@ -1666,9 +1832,15 @@ class OurEnvironment:
 
     for i in range(len(self.word)):
       if (cyrToLat(self.word[i]) not in helper):
-        print_corr.append(cyrToLat(self.word[i]))
+        if (i == 0):
+          print_corr.append(upperKazakh(cyrToLat(self.word[i])))
+        else:
+          print_corr.append(cyrToLat(self.word[i]))
       else:
-        print_corr.append(cyrToLat(self.word[i]))
+        if (i == 0):
+          print_corr.append(upperKazakh(cyrToLat(self.word[i])))
+        else:
+          print_corr.append(cyrToLat(self.word[i]))
         #print_corr.append(upperKazakh(cyrToLat(self.word[i])))
     self.info[5] = len(self.errors_easy)+len(self.errors_hard)
     self.logfile.write("Current problematic letters: ")
@@ -1686,7 +1858,8 @@ class OurEnvironment:
       else:
         bot.send_message(message.chat.id, more_than_one_mistake ())
       #bot.send_message(message.chat.id, random.choice(list_of_praises))
-      bot.send_message(message.chat.id, 'The correct writing is:'+print_corr2.join(print_corr))
+        #the correct writing is:
+      bot.send_message(message.chat.id, '✅ '+print_corr2.join(print_corr))
     else:
       bot.send_message(message.chat.id, no_mistakes())
 
@@ -1722,22 +1895,26 @@ class OurEnvironment:
       elif self.letters[i]==0 and letter_score(self.kazakh_letters[i])==3:
         commons = commons + 1
     sp = 0
-    if specifics == 0:
+    if specifics <= 1:
       sp = 0
-    elif specifics < 6:
+    elif specifics < 5:
       sp = 1
-    else:
+    elif specifics < 9:
       sp = 2
+    else:
+      sp = 3
     next_state_lettersRL.append('unexplored spec. lett-s score: ' + str(sp))
 
 
     cm = 0
     if commons == 0:
       cm = 0
-    elif commons < 6:
+    elif commons < 3:
       cm = 1
-    else:
+    elif commons < 6:
       cm = 2
+    else:
+      cm = 3
     next_state_lettersRL.append('unexplored com. lett-s score: ' + str(cm))
     
     sp = 0
@@ -1745,19 +1922,23 @@ class OurEnvironment:
     errors_easy = len(self.errors_easy)
     if errors_easy == 0:
       cm = 0
-    elif errors_easy < 4:
+    elif errors_easy < 3:
       cm = 1
-    else:
+    elif errors_easy < 6:
       cm = 2
+    else:
+      cm = 3
     next_state_lettersRL.append('num of com. errors: ' + str(cm))
         
     errors_hard = len(self.errors_hard)
     if errors_hard == 0:
       sp = 0
-    elif errors_hard < 6:
+    elif errors_hard < 3:
       sp = 1
-    else:
+    elif errors_hard < 6:
       sp = 2
+    else:
+      sp = 3
     next_state_lettersRL.append('num of spec. errors: ' + str(sp))
     next_state_lettersRL = ' '.join(next_state_lettersRL)
     
@@ -1776,21 +1957,23 @@ class OurEnvironment:
       
     #self.state.append('gender: ' + str(self.gender))
     
-    proportion = 0
-    if len(self.word)/self.time_elapsed >= 0.3 and len(self.word)/self.time_elapsed < 0.6: 
-      proportion = 0
-      reward = 250
-    elif len(self.word)/self.time_elapsed < 4 and len(self.word)/self.time_elapsed >= 0.6:
-      proportion = 1
-      reward = 250
-    else:
-      proportion = 2
-    next_state_levelRL.append('time proportion: ' + str(proportion))
-    
+   # proportion = 0
+  #  if self.time_elapsed/len(self.word) < 0.05:
+  #    proportion = 0
+  #  elif self.time_elapsed/len(self.word) < 0.14 and self.time_elapsed/len(self.word)>=0.05: 
+   #   proportion = 1
+   # elif self.time_elapsed/len(self.word) < 0.23 and self.time_elapsed/len(self.word)>=0.14:
+  #    proportion = 2
+   # else:
+   #   proportion = 3
+    #next_state_levelRL.append('time proportion: ' + str(proportion))
+ #   next_state_levelRL = ' '.join(next_state_levelRL)
     slope = 0
     if len(self.err_hst)>1:
         slope,sh = np.polyfit(list(range(0, len(self.err_hst))), self.err_hst, 1)
-    if slope < 0:
+    if slope < -0.25:
+      slope = 0
+    elif slope >= -0.25 and slope < 0:
       slope = 1
     elif slope >= 0 and slope < 0.25:
       slope = 2
@@ -1798,15 +1981,7 @@ class OurEnvironment:
       slope = 3
 
     next_state_levelRL.append('current slope ' + str(slope))
-
-
-    if len(self.err_hst) < 5:
-      next_state_levelRL.append('current half of epoch 0')
-    else:
-      next_state_levelRL.append('current half of epoch 1')
-
-    
-    next_state_levelRL = ' '.join(self.state_levelRL)
+    next_state_levelRL = ' '.join(self.state_levelRL)  
     
     
 
@@ -1819,7 +1994,7 @@ class OurEnvironment:
   #  for ele in range(0, len(self.letters)):
    #   total = total + self.letters[ele]
 
-    # reward = 0
+    reward = 0
     # if len(helper) < len(user_word_list)/2: 
     #   if self.time_elapsed <60 and self.time_elapsed> 5:
     #     reward = 10
@@ -2138,15 +2313,15 @@ class OurEnvironment:
     if self.counter < 10:
       if len(self.author) > 10:
         name = convert_kazakh_to_english(self.author)
-        text1 = "Could you please rewrite " + name + "'s following quote using Kazakh-Latin alphabet: " + self.word
-        text2 = "How the following quote of " + name + " would be written using Kazakh-Latin alphabet: "+ self.word
-        text3 = "Please rewrite " + name + "'s quote using Kazakh-Latin alphabet: " + self.word
+        text1 = "Could you please rewrite " + name + "'s following quote using Kazakh-Latin alphabet: \n⌨️ " + self.word
+        text2 = "How the following quote of " + name + " would be written using Kazakh-Latin alphabet: \n⌨️ "+ self.word
+        text3 = "Please rewrite " + name + "'s quote using Kazakh-Latin alphabet: \n⌨️ " + self.word
 
       else:
       
-        text1 = "Could you please write the following using Kazakh-Latin alphabet: "+ self.word
-        text2 = "How this phrase would look like using Kazakh-Latin alphabet: "+ self.word
-        text3 = "Please rewrite the following using Kazakh-Latin alphabet: "+ self.word
+        text1 = "Could you please write the following using Kazakh-Latin alphabet: \n⌨️ "+ self.word
+        text2 = "How this phrase would look like using Kazakh-Latin alphabet: \n⌨️ "+ self.word
+        text3 = "Please rewrite the following using Kazakh-Latin alphabet: \n⌨️ "+ self.word
 
       
       if (self.action_lettersRL == 0 or self.action_lettersRL == 2):
@@ -2220,7 +2395,7 @@ class OurEnvironment:
                                       + self.alpha * (reward + self.discount * nextValue)
     self.saveQValues_lettersRL()
     self.likes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    bot.send_message(self.id, "Thank you for your time!")
+    bot.send_message(self.id, "Thank you for your time! 😎")
     #return state, changed, action, reward, done
 
 
@@ -2370,16 +2545,16 @@ class OurEnvironment1:
     self.weight_list3 = []
     self.weight_list4 = []
     self.weight_list5 = []
-    self.list1 = ['апа', 'әже', 'бал', 'ваза', 'гүл', 'ғажап', 'дана', 'ерік', 'жауап', 'заман', 'ине', 'іс', 'көмек', 'қасық', 'лас', 'мамыр', 'неке', 'маңызды', 'осал', 'өрт', 'патша', 'рақым', 'сәуле', 'таза', 'ушу', 'ұя', 'үй', 'фарш', 'хат', 'шаш', 'ыдыс', 'ірімшік', 'аға', 'әке', 'бала','вагон', 'гу', 'ғарыш', 'дау', 'ереже', 'жігіт', 'заң', 'ит', 'шері', 'кеңес', 'қылыш', 'лай', 'мақсат', 'намыс', 'қараңғылық', 'от', 'өкім', 'піл', 'ру', 'сергек', 'тас', 'уәде', 'ұл', 'үй', 'факт', 'хабар', 'шарт', 'шәкір', 'ырыс', 'із']
+    self.list1 = ['апа', 'әже', 'бал', 'ваза', 'гүл', 'ғажап', 'дана', 'ерік', 'жауап', 'заман', 'ине', 'іс', 'көмек', 'қасық', 'лас', 'мамыр', 'неке', 'маңызды', 'осал', 'өрт', 'патша', 'рақым', 'сәуле', 'таза', 'ушу', 'ұя', 'үй', 'фарш', 'хат', 'шаш', 'ыдыс', 'ірімшік']
     self.list_of_lists.append(self.list1)
     for word in self.list1:
       self.weight_list1.append(count_letters_weights(word))
     self.list_of_lists_weights.append(self.weight_list1)
-    # self.list2 = ['аға', 'әке', 'бала','вагон', 'гу', 'ғарыш', 'дау', 'ереже', 'жігіт', 'заң', 'ит', 'шері', 'кеңес', 'қылыш', 'лай', 'мақсат', 'намыс', 'қараңғылық', 'от', 'өкім', 'піл', 'ру', 'сергек', 'тас', 'уәде', 'ұл', 'үй', 'факт', 'хабар', 'шарт', 'шәкір', 'ырыс', 'із']
-    # self.list_of_lists.append(self.list2)
-    # for word in self.list2:
-    #   self.weight_list2.append(count_letters_weights(word))
-    # self.list_of_lists_weights.append(self.weight_list2)
+    self.list2 = ['аға', 'әке', 'бала','вагон', 'гу', 'ғарыш', 'дау', 'ереже', 'жігіт', 'заң', 'ит', 'шері', 'кеңес', 'қылыш', 'лай', 'мақсат', 'намыс', 'қараңғылық', 'от', 'өкім', 'піл', 'ру', 'сергек', 'тас', 'уәде', 'ұл', 'үй', 'факт', 'хабар', 'шарт', 'шәкір', 'ырыс', 'із']
+    self.list_of_lists.append(self.list2)
+    for word in self.list2:
+      self.weight_list2.append(count_letters_weights(word))
+    self.list_of_lists_weights.append(self.weight_list2)
     self.list3 = ['ауф', 'әйи', 'буу', 'вах', 'гыа', 'ғаф', 'дей', 'ефу', 'жае', 'зим', 'исе', 'кук', 'қаң', 'лаф', 'мах', 'нао', 'ңа', 'фао', 'өйи', 'паф', 'рут', 'саю', 'тац', 'уей', 'ұп', 'үф', 'фаш', 'хас', 'һа', 'шуй', 'ымм', 'іди']
     self.list_of_lists.append(self.list3)
     for word in self.list3:
@@ -2483,8 +2658,7 @@ class OurEnvironment1:
     self.info[4] = np.count_nonzero(self.letters)
 
     # show the word to student
-    sent = bot.send_message(message.chat.id, please_try_typing(self.change_try_typing) + "\n" + 
-      "\n" + "                               " + self.word)
+    sent = bot.send_message(message.chat.id, please_try_typing(self.change_try_typing) + "\n" + "⌨️ " + self.word)
     if (self.change_try_typing != 4):
       self.change_try_typing = self.change_try_typing + 1
     else:
@@ -2509,7 +2683,7 @@ class OurEnvironment1:
 
     markup.row(buttonA, buttonB)
 
-    bot.send_message(self.id, 'Did you liked this interaction?', reply_markup=markup)
+    bot.send_message(self.id, '🙃 ---End of the section--- 🙂\n'+'Did you like this interaction?', reply_markup=markup)
 
 
   def getLike(self, id, counter):
@@ -2521,7 +2695,7 @@ class OurEnvironment1:
 
     markup.row(buttonA, buttonB)
 
-    bot.send_message(self.id, 'Did you liked this phrase?', reply_markup=markup)
+    bot.send_message(self.id, 'Did you like this phrase?', reply_markup=markup)
 
   def process(self, message):
     # the message of the user is obtained
@@ -2531,7 +2705,6 @@ class OurEnvironment1:
       user_word_written = user_word_written + lowerKazakh(ch)
 ############# UNTIL HERE ##########################
     self.end_time = time.time()
-    self.time_total = 0 
     self.logfile.write("User's trial: " + user_word_written + "\n")
     time_elapsed = self.end_time - self.start_time
     self.logfile.write("Time of this interaction: " + str(time_elapsed) + "\n")
@@ -2600,7 +2773,8 @@ class OurEnvironment1:
       else:
         bot.send_message(message.chat.id, more_than_one_mistake ())
       #bot.send_message(message.chat.id, random.choice(list_of_praises))
-      bot.send_message(message.chat.id, 'The correct writing is:'+print_corr2.join(print_corr))
+        #the correct writing is:
+      bot.send_message(message.chat.id, '✅ '+print_corr2.join(print_corr))
     else:
       bot.send_message(message.chat.id, no_mistakes())
     #self.logfile.close()
@@ -2616,9 +2790,9 @@ class OurEnvironment1:
     self.getLike(self.id, self.counter)
 
     self.counter = self.counter + 1
-    # time_elapsed = time_elapsed//5
-    # if time_elapsed>10:
-    #   time_elapsed = 10
+    time_elapsed = time_elapsed//5
+    if time_elapsed>10:
+      time_elapsed = 10
     self.state_lettersRL = []
     self.state_levelRL = []
     specifics = 0
@@ -2629,22 +2803,26 @@ class OurEnvironment1:
       elif self.letters[i]==0 and letter_score(self.kazakh_letters[i])==3:
         commons = commons + 1
     sp = 0
-    if specifics == 0:
+    if specifics <= 1:
       sp = 0
-    elif specifics < 6:
+    elif specifics < 5:
       sp = 1
-    else:
+    elif specifics < 9:
       sp = 2
+    else:
+      sp = 3
     self.state_lettersRL.append('unexplored spec. lett-s score: ' + str(sp))
 
 
     cm = 0
     if commons == 0:
       cm = 0
-    elif commons < 6:
+    elif commons < 3:
       cm = 1
-    else:
+    elif commons < 6:
       cm = 2
+    else:
+      cm = 3
     self.state_lettersRL.append('unexplored com. lett-s score: ' + str(cm))
     
     sp = 0
@@ -2652,19 +2830,23 @@ class OurEnvironment1:
     errors_easy = len(self.errors_easy)
     if errors_easy == 0:
       cm = 0
-    elif errors_easy < 4:
+    elif errors_easy < 3:
       cm = 1
-    else:
+    elif errors_easy < 6:
       cm = 2
+    else:
+      cm = 3
     self.state_lettersRL.append('num of com. errors: ' + str(cm))
         
     errors_hard = len(self.errors_hard)
     if errors_hard == 0:
       sp = 0
-    elif errors_hard < 6:
+    elif errors_hard < 3:
       sp = 1
-    else:
+    elif errors_hard < 6:
       sp = 2
+    else:
+      sp = 3
     self.state_lettersRL.append('num of spec. errors: ' + str(sp))
     self.state_lettersRL = ' '.join(self.state_lettersRL)
     
@@ -2683,18 +2865,23 @@ class OurEnvironment1:
       
     #self.state.append('gender: ' + str(self.gender))
     
-    proportion = 0
-    if len(self.word)/time_elapsed >= 0.3 and len(self.word)/time_elapsed < 0.6: 
-      proportion = 0
-    elif len(self.word)/time_elapsed < 4 and len(self.word)/time_elapsed >= 0.6:
-      proportion = 1
-    else:
-      proportion = 2
-    self.state_levelRL.append('time proportion: ' + str(proportion))
+    # proportion = 0
+    # if time_elapsed/len(self.word) < 0.05:
+    #   proportion = 0
+    # elif time_elapsed/len(self.word) < 0.14 and time_elapsed/len(self.word)>=0.05: 
+    #   proportion = 1
+    # elif time_elapsed/len(self.word) < 0.23 and time_elapsed/len(self.word)>=0.14:
+    #   proportion = 2
+    # else:
+    #   proportion = 3
+    # self.state_levelRL.append('time proportion: ' + str(proportion))
+    # self.state_levelRL = ' '.join(self.state_levelRL)
     slope = 0
     if len(self.err_hst)>1:
         slope,sh = np.polyfit(list(range(0, len(self.err_hst))), self.err_hst, 1)
-    if slope < 0:
+    if slope < -0.25:
+      slope = 0
+    elif slope >= -0.25 and slope < 0:
       slope = 1
     elif slope >= 0 and slope < 0.25:
       slope = 2
@@ -2702,22 +2889,14 @@ class OurEnvironment1:
       slope = 3
 
     self.state_levelRL.append('current slope ' + str(slope))
-
-
-    if len(self.err_hst) < 5:
-      self.state_levelRL.append('current half of epoch 0')
-    else:
-      self.state_levelRL.append('current half of epoch 1')
-
-    
     self.state_levelRL = ' '.join(self.state_levelRL)
     
     self.action_lettersRL = self.act_lettersRL(self.state_lettersRL, self.epsilon)
     self.action_levelRL = self.act_levelRL(self.state_levelRL, self.epsilon)
-    if self.action_levelRL == 0 and self.theme>1:
-      self.theme = random.randint(0, 1)
-    elif self.action_levelRL == 2 and self.theme<2:
-      self.theme = random.randint(2, 3)
+    if self.action_levelRL == 0 and self.theme>2:
+      self.theme = random.randint(0, 2)
+    elif self.action_levelRL == 2 and self.theme<3:
+      self.theme = random.randint(3, 4)
 
     # done = False
     changed = False
@@ -2848,14 +3027,18 @@ class OurEnvironment1:
             self.logfile.write("\n")
         
         if self.action_lettersRL == 3:
+          self.logfile.write("Theme changed from " + str(self.theme))
+          self.theme = random.randint(0, 2)
+          self.logfile.write(" to " + str(self.theme) + "\n")
           tmp = [idx for idx in self.list_of_lists[self.theme] if self.letters[self.kazakh_letters.index(cyrToLat(idx[0]))] == 0 and letter_score(self.kazakh_letters[self.kazakh_letters.index(cyrToLat(idx[0]))])==3]
           self.word = random.choice(tmp)
           self.logfile.write("\n")
           self.logfile.write("Next selected word: " + self.word + "\n")
+          self.letters_copy = self.letters
           for c in self.word:
             if c != 'ъ' and c != 'Ъ' and c != 'ь' and c != 'Ь':
               self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1
-          self.logfile.write("Updated list of remaining letters to explore: ")
+          self.logfile.write("Updated list of remaining letters to explore:")
           for idx in range(len(self.letters)):
             if self.letters[idx] == 0:
               self.logfile.write(self.kazakh_letters[idx] + " ")
@@ -2894,8 +3077,7 @@ class OurEnvironment1:
       bot.send_message(message.chat.id, "Let's work on letter: " + latToCyr(s))
     elif (random.randint(0,2) == 0):
       bot.send_message(message.chat.id, "Let's work on some new letters")
-    sent2 = bot.send_message(message.chat.id, please_try_typing(self.change_try_typing) + "\n" + 
-      "\n" + "                               " + self.word)
+    sent2 = bot.send_message(message.chat.id, please_try_typing(self.change_try_typing) + "\n" + "⌨️ " + self.word)
     if (self.change_try_typing != 4):
       self.change_try_typing = self.change_try_typing + 1
     else:
@@ -2924,9 +3106,9 @@ class OurEnvironment1:
     self.info[1] = round(self.info[1] + self.time_total, 2)
     self.info[6] = round((self.info[6]*(self.counter - 1) + time_elapsed)/self.counter, 2)
     self.info[7].append(round(time_elapsed, 2))
-    # time_elapsed = time_elapsed//5
-    # if time_elapsed>10:
-    #   time_elapsed = 10
+    time_elapsed = time_elapsed//5
+    if time_elapsed>10:
+      time_elapsed = 10
 
     user_word_list = []
     for i in range(len(user_word_written)):
@@ -2984,7 +3166,8 @@ class OurEnvironment1:
       else:
         bot.send_message(message.chat.id, more_than_one_mistake ())
       #bot.send_message(message.chat.id, random.choice(list_of_praises))
-      bot.send_message(message.chat.id,'The correct writing is:'+ print_corr2.join(print_corr))
+        #the correct writing is:
+      bot.send_message(message.chat.id,'✅ '+ print_corr2.join(print_corr))
     else:
       bot.send_message(message.chat.id, no_mistakes())
 
@@ -3020,22 +3203,26 @@ class OurEnvironment1:
       elif self.letters[i]==0 and letter_score(self.kazakh_letters[i])==3:
         commons = commons + 1
     sp = 0
-    if specifics == 0:
+    if specifics <= 1:
       sp = 0
-    elif specifics < 6:
+    elif specifics < 5:
       sp = 1
-    else:
+    elif specifics < 9:
       sp = 2
+    else:
+      sp = 3
     next_state_lettersRL.append('unexplored spec. lett-s score: ' + str(sp))
 
 
     cm = 0
     if commons == 0:
       cm = 0
-    elif commons < 6:
+    elif commons < 3:
       cm = 1
-    else:
+    elif commons < 6:
       cm = 2
+    else:
+      cm = 3
     next_state_lettersRL.append('unexplored com. lett-s score: ' + str(cm))
     
     sp = 0
@@ -3043,19 +3230,23 @@ class OurEnvironment1:
     errors_easy = len(self.errors_easy)
     if errors_easy == 0:
       cm = 0
-    elif errors_easy < 6:
+    elif errors_easy < 3:
       cm = 1
-    else:
+    elif errors_easy < 6:
       cm = 2
+    else:
+      cm = 3
     next_state_lettersRL.append('num of com. errors: ' + str(cm))
         
     errors_hard = len(self.errors_hard)
     if errors_hard == 0:
       sp = 0
-    elif errors_hard < 6:
+    elif errors_hard < 3:
       sp = 1
-    else:
+    elif errors_hard < 6:
       sp = 2
+    else:
+      sp = 3
     next_state_lettersRL.append('num of spec. errors: ' + str(sp))
     next_state_lettersRL = ' '.join(next_state_lettersRL)
     
@@ -3069,21 +3260,25 @@ class OurEnvironment1:
     next_state_levelRL.append('theme: ' + str(self.theme))
       
     #self.state.append('gender: ' + str(self.gender))
-    proportion = 0
-    if len(self.word)/self.time_elapsed >= 0.3 and len(self.word)/self.time_elapsed < 0.6: 
-      proportion = 0
-      reward = 250
-    elif len(self.word)/self.time_elapsed < 4 and len(self.word)/self.time_elapsed >= 0.6:
-      proportion = 1
-      reward = 250
-    else:
-      proportion = 2
-    next_state_levelRL.append('time proportion: ' + str(proportion))
+    
+ #   proportion = 0
+  #  if self.time_elapsed/len(self.word) < 0.05:
+  #    proportion = 0
+  #  elif self.time_elapsed/len(self.word) < 0.14 and self.time_elapsed/len(self.word)>=0.05: 
+  #    proportion = 1
+ #   elif self.time_elapsed/len(self.word) < 0.23 and self.time_elapsed/len(self.word)>=0.14:
+  #    proportion = 2
+  #  else:
+  #    proportion = 3
+    # next_state_levelRL.append('time proportion: ' + str(proportion))
+  #  next_state_levelRL = ' '.join(next_state_levelRL)
     
     slope = 0
     if len(self.err_hst)>1:
-        slope,sh = np.polyfit(list(range(0, len(self.err_hst))), self.err_hst, 1)
-    if slope < 0:
+        slope, sh= np.polyfit(list(range(0, len(self.err_hst))), self.err_hst, 1)
+    if slope < -0.25:
+      slope = 0
+    elif slope >= -0.25 and slope < 0:
       slope = 1
     elif slope >= 0 and slope < 0.25:
       slope = 2
@@ -3091,14 +3286,6 @@ class OurEnvironment1:
       slope = 3
 
     next_state_levelRL.append('current slope ' + str(slope))
-
-
-    if len(self.err_hst) < 5:
-      next_state_levelRL.append('current half of epoch 0')
-    else:
-      next_state_levelRL.append('current half of epoch 1')
-
-    
     next_state_levelRL = ' '.join(self.state_levelRL)
 
     self.counter = self.counter + 1
@@ -3114,7 +3301,7 @@ class OurEnvironment1:
     # else:
     #   reward = -50
     # self.logfile.write("reward: " + str(reward) +"\n")
-    # reward = 0
+    reward = 0
     # nextQValues = [self.qValues.get((next_state, nextAction), 0) for nextAction in self.actions]
     # nextValue = max(nextQValues)
     # self.qValues[(self.state, self.action)] = (1 - self.alpha) * self.qValues.get((self.state, self.action), 0) \
@@ -3262,14 +3449,18 @@ class OurEnvironment1:
             self.logfile.write("\n")
         
         if self.action_lettersRL == 3:
-          tmp = [idx for idx in self.list_of_lists[self.theme] if self.letters[self.kazakh_letters.index(cyrToLat(idx[0]))] == 0 and letter_score(self.kazakh_letters[self.kazakh_letters.index(cyrToLat(idx[0]))])==1]
+          self.logfile.write("Theme changed from " + str(self.theme))
+          self.theme = random.randint(0, 2)
+          self.logfile.write(" to " + str(self.theme) + "\n")
+          tmp = [idx for idx in self.list_of_lists[self.theme] if self.letters[self.kazakh_letters.index(cyrToLat(idx[0]))] == 0  and letter_score(self.kazakh_letters[self.kazakh_letters.index(cyrToLat(idx[0]))])==3]
           self.word = random.choice(tmp)
           self.logfile.write("\n")
           self.logfile.write("Next selected word: " + self.word + "\n")
+          self.letters_copy = self.letters
           for c in self.word:
             if c != 'ъ' and c != 'Ъ' and c != 'ь' and c != 'Ь':
               self.letters[stringToList(self.kazakh_letters).index(cyrToLat(c))] = 1
-          self.logfile.write("Updated list of remaining letters to explore: ")
+          self.logfile.write("Updated list of remaining letters to explore:")
           for idx in range(len(self.letters)):
             if self.letters[idx] == 0:
               self.logfile.write(self.kazakh_letters[idx] + " ")
@@ -3310,8 +3501,7 @@ class OurEnvironment1:
       elif (random.randint(0,2) == 0):
         bot.send_message(message.chat.id, "Let's work on some new letters")
         
-      sent2 = bot.send_message(message.chat.id, please_try_typing(self.change_try_typing) + "\n" + 
-      "\n" + "                               " + self.word)
+      sent2 = bot.send_message(message.chat.id, please_try_typing(self.change_try_typing) + "\n" + "⌨️ " + self.word)
       if (self.change_try_typing != 4):
         self.change_try_typing = self.change_try_typing + 1
       else:
@@ -3339,7 +3529,7 @@ class OurEnvironment1:
       add_reward = add_reward + 1000
     elif slope >= -0.25 and slope < 0:
       add_reward = add_reward + 500
-    
+
     
     i = 0
     for (state, action, reward, nextState) in self.gameIter_levelRL[::-1]:  
@@ -3456,7 +3646,7 @@ def handle_query(call):
     envs[int(call.data[:-1])].theme = 2
     envs[int(call.data[:-1])].start_episode()
   elif (call.data[-1] == 'l'):
-    bot.send_message(int(call.data[:-1]), "Thank you!")
+    bot.send_message(int(call.data[:-1]), "Thank you! 😁")
     #print(self.id)
     envs[int(call.data[:-1])].processFeedback(True)
   elif (call.data[-1] == 'd'):
@@ -3464,7 +3654,7 @@ def handle_query(call):
     #print(self.id)
     envs[int(call.data[:-1])].processFeedback(False)
   elif (call.data[-1] == 'y'):
-    bot.send_message(int(call.data[:-1]), "Thank you!")
+    bot.send_message(int(call.data[:-1]), "Thank you! 🌝")
     #print(self.id)
     envs1[int(call.data[:-1])].processFeedback(True)
   elif (call.data[-1] == 'n'):
@@ -3530,5 +3720,7 @@ if __name__ == '__main__':
   #   qValues[(state, action)] = (1 - alpha) * qValues.get((state, action), 0) \
   #                                   + alpha * (reward + discount * nextValue)
   # input("Press Enter to continue...")   # to start new episode user have to activate it
+
+  
 
   
